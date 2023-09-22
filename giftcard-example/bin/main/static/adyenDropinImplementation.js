@@ -17,9 +17,7 @@ async function startCheckout() {
 
   } catch (error) {
     console.error(error);
-    //console.error(clientKey);
     alert("Error occurred. Look at console for details");
-    //alert(apiKey);
   }
 }
 
@@ -42,7 +40,6 @@ async function createAdyenCheckout(session){
       environment: "test",
       session: session,
       showPayButton: true,
-      shopperInteraction: "Ecommerce",
       paymentMethodsConfiguration: {
         ideal: {
           showImage: true,
@@ -50,19 +47,7 @@ async function createAdyenCheckout(session){
         card: {
           hasHolderName: true,
           holderNameRequired: true,
-          name: "Credit or debit card",          
-          amount: {
-            value: 10000,  // in minor units
-            currency: "EUR",
-          },
-        },
-        paypal: {
-          amount: {
-            value: 10000, // in minor units
-            currency: "USD",
-          },
-          environment: "test", // Change this to "live" when you're ready to accept live PayPal payments
-          countryCode: "US", // Only needed for test. This will be automatically retrieved when you are in production.
+          name: "Credit or debit card"
         }
       },
       onPaymentCompleted: (result, component) => {

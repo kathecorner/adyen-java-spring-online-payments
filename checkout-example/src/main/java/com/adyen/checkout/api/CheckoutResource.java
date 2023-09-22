@@ -7,6 +7,7 @@ import com.adyen.model.checkout.Amount;
 import com.adyen.model.checkout.CreateCheckoutSessionRequest;
 import com.adyen.model.checkout.CreateCheckoutSessionResponse;
 import com.adyen.model.checkout.LineItem;
+import com.adyen.model.checkout.CreateCheckoutSessionRequest.ShopperInteractionEnum;
 import com.adyen.service.checkout.PaymentsApi;
 import com.adyen.service.exception.ApiException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,6 +43,9 @@ public class CheckoutResource {
             throw new RuntimeException("ADYEN_KEY is UNDEFINED");
         }
 
+        log.info(applicationProperty.getApiKey());
+        
+
         var client = new Client(applicationProperty.getApiKey(), Environment.TEST);
         this.paymentsApi = new PaymentsApi(client);
     }
@@ -54,6 +58,10 @@ public class CheckoutResource {
             .value(10000L); // value is 100€ in minor units
 
         var checkoutSession = new CreateCheckoutSessionRequest();
+        //var shopperInteraction = new CreateShopperInteraction();
+        //var ShopperInteractionEnum = "Ecommerce";
+
+        //checkoutSession.setShopperInteraction(ShopperInteractionEnum);
         checkoutSession.countryCode("NL");
         checkoutSession.merchantAccount(this.applicationProperty.getMerchantAccount());
         // (optional) set WEB to filter out payment methods available only for this platform
@@ -61,13 +69,22 @@ public class CheckoutResource {
         checkoutSession.setReference(orderRef); // required
         checkoutSession.setReturnUrl(request.getScheme() + "://" + host + "/redirect?orderRef=" + orderRef);
         checkoutSession.setAmount(amount);
+        checkoutSession.setShopperInteraction(CreateCheckoutSessionRequest.ShopperInteractionEnum.ECOMMERCE);
+        checkoutSession.setShopperEmail("testcase@test.com");
+        checkoutSession.setShopperLocale("en_US");
+
+        
         // set lineItems required for some payment methods (ie Klarna)
         checkoutSession.setLineItems(Arrays.asList(
             new LineItem().quantity(1L).amountIncludingTax(5000L).description("Sunglasses"),
             new LineItem().quantity(1L).amountIncludingTax(5000L).description("Headphones"))
         );
 
+
         log.info("REST request to create Adyen Payment Session {}", checkoutSession);
+        log.info("this is the msg.");
+        log.info(applicationProperty.getApiKey());
+
         var response = paymentsApi.sessions(checkoutSession);
         return ResponseEntity.ok().body(response);
     }
