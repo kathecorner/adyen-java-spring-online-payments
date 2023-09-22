@@ -1,5 +1,33 @@
 # Adyen Online Payment Integration Demos
 
+# Steps Kenji made
+
+
+[1] Use Spring Initializr (https://start.spring.io/)
+
+add dependencies of following:
+- Spring Boot DevTools
+- Spring Web
+- Thymeleaf
+
+after create the collection, replace the build.gradle file to the newly created one.
+
+[2] Install Oracle Java SDK ver17
+
+[3] export env values at command
+
+export ADYEN_API_KEY=“AQEyhmfxL4PJahZCw0m/n3Q5qf3VaY9UCJ1+XWZe9W27jmlZiv4PD4jhfNMofnLr2K5i8/0QwV1bDb7kfNy1WIxIIkXXXXXXXX//eJZxvoAOknIIddv4=-<anpTLkW{]ZgGy,7”
+export ADYEN_MERCHANT_ACCOUNT=KeXXXnjiWXXXX
+export ADYEN_CLIENT_KEY=test_RKKXXXXXXXXXXXXKBMI6
+export ADYEN_HMAC_KEY=ee40ca7bc90df844d2f5b5667b27361a2350fad99352d8a6ce061c69e41e5d32
+
+[4] run VScode, then run 'start debugging'
+
+[5] the server starts at localhost:8080
+
+[6] enabled shopperInteraction at OnlinePaymentApplication.java
+
+
 [![Java CI with Gradle](https://github.com/adyen-examples/adyen-java-spring-online-payments/actions/workflows/build.yml/badge.svg)](https://github.com/adyen-examples/adyen-java-spring-online-payments/actions/workflows/build.yml) 
 [![E2E (Playwright)](https://github.com/adyen-examples/adyen-java-spring-online-payments/actions/workflows/e2e.yml/badge.svg)](https://github.com/adyen-examples/adyen-java-spring-online-payments/actions/workflows/e2e.yml)
 
